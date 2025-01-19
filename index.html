@@ -1,0 +1,53 @@
+    <h1>Quiz Game</h1>
+      <form>
+        <button type='button' onclick="grader(this)">Grade</button>
+      </form>
+  <script>
+    let defaultQuiz = {
+        one: {
+          question: "What is 1+1",
+          answer: "Mg==",
+          a: "1",
+          b: "2",
+          c: "3",
+          d: "4"
+        }
+      },
+      form = document.querySelector("form"),
+      urlParams = new URLSearchParams(window.location.search),
+      quizQuery = urlParams.get("quiz"),
+      quiz = defaultQuiz;
+
+    function loadQuiz() {
+      if (null !== quizQuery) quiz = atob(quizQuery), quiz = JSON.parse(quiz)
+      
+      var t = Object.keys(quiz)
+      for (let e = 0; e < t.length; e++) {
+        var o = quiz[t[e]],
+          n = `<fieldset><legend id=${"q-"+e}></legend><div><input type="radio" value="" name="${e}" id=${"r-a-"+e} /><label for"one" id=${"label-a-"+e}></label><input type="radio" value="" name="${e}" id=${"r-b-"+e} /><label for"two" id=${"label-b-"+e}></label><input type="radio" value="" name="${e}" id=${"r-c-"+e} /><label for"three" id=${"label-c-"+e}></label><input type="radio" value="" name="${e}" id=${"r-d-"+e} /><label for"four" id=${"label-d-"+e}></label></div></fieldset><br />`;
+        form.innerHTML = n + form.innerHTML, document.getElementById("q-" + e).innerText = o.question, document.getElementById("r-a-" + e).value = o.a, document.getElementById("r-b-" + e).value = o.b, document.getElementById("r-c-" + e).value = o.c, document.getElementById("r-d-" + e).value = o.d, document.getElementById("label-a-" + e).innerText = o.a, document.getElementById("label-b-" + e).innerText = o.b, document.getElementById("label-c-" + e).innerText = o.c, document.getElementById("label-d-" + e).innerText = o.d
+      }
+    }
+
+    function grader(e) {
+      let o = 0;
+      var n = Object.keys(quiz);
+      z = n.length
+      for (let a = 0; a < z; a++) {
+        var i = atob(quiz[n[a]].answer);
+        let t = "";
+        var l = ["a", "b", "c", "d"];
+        for (let e = 0; e < 4; e++) {
+          var d = document.getElementById(`r-${l[e]}-` + a);
+          if (d.checked) {
+            t = d.value;
+            break
+          }
+        }
+        i === t && o++
+      }
+      e = Math.round(100 * (o / z));
+      alert(`${e}%`)
+    }
+    loadQuiz()
+  </script>

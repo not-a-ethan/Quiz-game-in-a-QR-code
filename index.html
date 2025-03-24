@@ -1,4 +1,12 @@
     <h1>Quiz Game</h1>
+    <style>
+      * {
+        background-color: black;
+        color: lightgray;
+
+        text-align: center;
+      }
+    </style>
       <form>
         <button type='button' onclick="grader(this)">Grade</button>
       </form>
@@ -15,12 +23,9 @@
       },
       form = document.querySelector("form"),
       urlParams = new URLSearchParams(window.location.search),
-      quizQuery = urlParams.get("quiz"),
       quiz = defaultQuiz;
 
-    function loadQuiz() {
-      if (null !== quizQuery) quiz = atob(quizQuery), quiz = JSON.parse(quiz)
-      
+    function loadQuiz() {      
       var t = Object.keys(quiz)
       for (let e = 0; e < t.length; e++) {
         var o = quiz[t[e]],
@@ -46,8 +51,7 @@
         }
         i === t && o++
       }
-      e = Math.round(100 * (o / z));
-      alert(`${e}%`)
+      alert(`${Math.round(100 * (o / z))}%`)
     }
     loadQuiz()
   </script>
